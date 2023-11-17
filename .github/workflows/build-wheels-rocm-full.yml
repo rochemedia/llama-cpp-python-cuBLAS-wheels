@@ -172,8 +172,8 @@ jobs:
           
           if ($packageVersion -gt [version]'0.2.13' -and $packageVersion -lt [version]'0.2.19')
           {
-            $pyScripts = (dir '.\llama_cpp_cuda\*.py')
-            $pyScripts.fullname.foreach({New-Item $_ -itemType File -value (cat $_ -raw).replace('import llama_cpp.llama','from . import llama') -force})
+            $pyScripts = (Get-ChildItem $(Join-Path '.' 'llama_cpp_cuda' '*.py'))
+            $pyScripts.fullname.foreach({New-Item $_ -itemType File -value (Get-Content $_ -raw).replace('import llama_cpp.llama','from . import llama') -force})
           }
         
       - name: Build Wheel
